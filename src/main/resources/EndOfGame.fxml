@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #e1eef9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gr.aueb.dmst.jabuzzz.game.view.EndOfGameController">
+   <children>
+      <Label layoutX="181.0" layoutY="59.0" text="Τέλος Παιχνιδιού">
+         <font>
+            <Font name="Comic Sans MS" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="149.0" layoutY="114.0" text="Νικήτρια ομάδα: ">
+         <font>
+            <Font name="Comic Sans MS" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="winnerName" layoutX="334.0" layoutY="114.0" text="winnerName">
+         <font>
+            <Font name="Comic Sans MS" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="playAgain" layoutX="216.0" layoutY="175.0" mnemonicParsing="false" onAction="#GoToGameSetUp" prefHeight="51.0" prefWidth="169.0" style="-fx-background-color: #c95d6a;" text="Παίξε Ξανά">
+         <font>
+            <Font name="Comic Sans MS Bold" size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="Exit" layoutX="216.0" layoutY="252.0" mnemonicParsing="false" onAction="#ExitGame" prefHeight="51.0" prefWidth="169.0" style="-fx-background-color: #c95d6a;" text="Έξοδος">
+         <font>
+            <Font name="Comic Sans MS Bold" size="24.0" />
+         </font>
+      </Button>
+      <Label layoutX="206.0" layoutY="364.0" text="Provided by team J@buzzz">
+         <font>
+            <Font name="Comic Sans MS" size="15.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="111.0" fitWidth="152.0" layoutX="396.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@photos/GameIcon.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

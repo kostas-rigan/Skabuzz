@@ -11,9 +11,13 @@ import java.util.ArrayList;
 public class DBConnector {
     private Connection conn;
 
+    public Connection getConnection() {
+        return this.conn;
+    }
+    
     public void connect() {
 
-        String url = "jdbc:sqlite:src/main/resources/DATA_BASE.sqlite";
+        String url = "jdbc:sqlite:classes/database/DATA_BASE.sqlite";
 
         try {
             conn = DriverManager.getConnection(url);
@@ -54,9 +58,9 @@ public class DBConnector {
 
         String sql = String.format("SELECT Question_id FROM Questions WHERE Category = '%s'",category);
 
-        try(
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
             // loop through the result set
             while (rs.next()) {

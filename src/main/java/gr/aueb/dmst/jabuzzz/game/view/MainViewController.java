@@ -2,6 +2,9 @@ package gr.aueb.dmst.jabuzzz.game.view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
@@ -373,13 +376,13 @@ public class MainViewController implements Initializable {
             questIds.addAll(dbconnector.selectQuestionId(category));
         }
         
-        for (int i = 0; i < questIds.size(); i++) {
+        for (int i = 0; i < questIds.size(); i++) { 
             /*
              * Check if correct answer is in the first numberOfAnswers array cells.
              * If it is then it will continue.
              * Otherwise it will remove the question and re add it.
              */
-        	while (true) {
+             while (true) {
         	    
         	    new Question(dbconnector.selectQuestion(questIds.get(i)));
         	    String currentCorrectAnswer = Question.correctAnswer.get(i);
@@ -487,5 +490,27 @@ public class MainViewController implements Initializable {
         timerLabel.setOpacity(0);
         nextButton.setDisable(true);
         nextButton.setOpacity(0);
+    }
+    
+    private ArrayList<Integer> selectQuestionId(String category){
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+
+        String sql = String.format("SELECT Question_id FROM Questions WHERE Category = '%s'",category);
+        questionArea.setText(dbconnector.getConnection().toString());
+
+        /*try {
+            Statement stmt = dbconnector.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            // loop through the result set
+            /*while (rs.next()) {
+                ids.add((Integer) rs.getObject(1));
+            }*/
+
+        /*} catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } */
+        return ids;
     }
 }

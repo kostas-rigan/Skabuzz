@@ -112,7 +112,7 @@ public class GameSetUpController implements Initializable {
         diffLevel = difficulty.getValue();
         setDifficultyOfGame();
 
-        if (myth.getSelected() && geo.getSelected() && hist.getSelected()) {
+        if (!myth.getSelected() && !geo.getSelected() && !hist.getSelected()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setContentText(

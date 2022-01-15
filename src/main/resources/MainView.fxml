@@ -15,7 +15,7 @@
    <center>
       <VBox prefHeight="470.0" prefWidth="669.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="questionArea" alignment="CENTER" contentDisplay="CENTER" prefHeight="186.0" prefWidth="594.0" style="-fx-wrap-text: true;" text="What is your name? jhvfkwufyyucgoasiubwodufhdgkauyfdkeehdjldiglid">
+            <Label fx:id="questionArea" alignment="CENTER" contentDisplay="CENTER" prefHeight="186.0" prefWidth="594.0" style="-fx-wrap-text: true;" text="What is your name? jhvfkwufyyucgoasiubwodufhdgkauyfdkeehdjldiglid" textAlignment="CENTER">
                <font>
                   <Font name="Comic Sans MS" size="36.0" />
                </font>
@@ -73,7 +73,7 @@
       </VBox>
    </center>
    <top>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="87.0" prefWidth="985.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#returnToMainMenu" style="-fx-background-color: #c95d6a;" text="Πίσω στο Μενού">
                <HBox.margin>
@@ -104,21 +104,29 @@
    <right>
       <VBox prefHeight="473.0" prefWidth="196.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="teamBArea" alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="29.0" prefWidth="166.0" text="Label" textAlignment="RIGHT">
+            <Label alignment="CENTER" prefHeight="25.0" prefWidth="148.0" text="Buzzer 'Λ'" textAlignment="CENTER">
                <font>
-                  <Font name="Comic Sans MS" size="21.0" />
+                  <Font name="Comic Sans MS" size="18.0" />
                </font>
-               <padding>
-                  <Insets right="25.0" />
-               </padding>
+               <VBox.margin>
+                  <Insets left="25.0" right="25.0" />
+               </VBox.margin>
             </Label>
-            <Label fx:id="scoreBArea" alignment="TOP_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="29.0" prefWidth="178.0" text="Team B Scores" textAlignment="RIGHT">
+            <Label fx:id="teamBArea" alignment="CENTER" contentDisplay="RIGHT" prefHeight="29.0" prefWidth="188.0" text="Label" textAlignment="RIGHT">
                <font>
                   <Font name="Comic Sans MS" size="21.0" />
                </font>
-               <padding>
+               <VBox.margin>
                   <Insets right="25.0" />
-               </padding>
+               </VBox.margin>
+            </Label>
+            <Label fx:id="scoreBArea" alignment="CENTER" contentDisplay="RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="29.0" prefWidth="211.0" text="Team B Scores" textAlignment="RIGHT">
+               <font>
+                  <Font name="Comic Sans MS" size="21.0" />
+               </font>
+               <VBox.margin>
+                  <Insets right="25.0" />
+               </VBox.margin>
             </Label>
             <Button fx:id="buzzerButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onKeyPressed="#handleBuzzer" opacity="0.0" text="Buzzer" />
          </children>
@@ -127,7 +135,15 @@
    <left>
       <VBox prefHeight="473.0" prefWidth="195.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="teamAArea" prefHeight="29.0" prefWidth="132.0" text="Andriani">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="146.0" text="Buzzer 'Α'" textAlignment="CENTER">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="25.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="teamAArea" alignment="CENTER" prefHeight="30.0" prefWidth="186.0" text="Andriani">
                <font>
                   <Font name="Comic Sans MS" size="21.0" />
                </font>
@@ -135,7 +151,7 @@
                   <Insets left="25.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="scoreAArea" layoutX="35.0" layoutY="10.0" prefHeight="29.0" prefWidth="159.0" text="Team A Scores">
+            <Label fx:id="scoreAArea" alignment="CENTER" layoutX="35.0" layoutY="10.0" prefHeight="29.0" prefWidth="195.0" text="Team A Scores">
                <font>
                   <Font name="Comic Sans MS" size="21.0" />
                </font>

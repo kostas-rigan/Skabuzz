@@ -24,12 +24,12 @@
             <Font name="Comic Sans MS" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="playAgain" layoutX="216.0" layoutY="175.0" mnemonicParsing="false" onAction="#GoToGameSetUp" prefHeight="51.0" prefWidth="169.0" style="-fx-background-color: #c95d6a;" text="Παίξε Ξανά">
+      <Button fx:id="playAgain" layoutX="216.0" layoutY="175.0" mnemonicParsing="false" onAction="#goToGameSetUp" prefHeight="51.0" prefWidth="169.0" style="-fx-background-color: #c95d6a;" text="Παίξε Ξανά">
          <font>
             <Font name="Comic Sans MS Bold" size="24.0" />
          </font>
       </Button>
-      <Button fx:id="Exit" layoutX="216.0" layoutY="252.0" mnemonicParsing="false" onAction="#ExitGame" prefHeight="51.0" prefWidth="169.0" style="-fx-background-color: #c95d6a;" text="Έξοδος">
+      <Button fx:id="exit" layoutX="216.0" layoutY="252.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="51.0" prefWidth="169.0" style="-fx-background-color: #c95d6a;" text="Έξοδος">
          <font>
             <Font name="Comic Sans MS Bold" size="24.0" />
          </font>

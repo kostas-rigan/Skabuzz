@@ -9,15 +9,15 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="985.0" style="-fx-background-color: #e1eef9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gr.aueb.dmst.jabuzzz.game.view.MainMenuController">
    <children>
-      <Button layoutX="400.0" layoutY="297.0" mnemonicParsing="false" onAction="#Play" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #c95d6a;" text="Παίξε">
+      <Button layoutX="400.0" layoutY="297.0" mnemonicParsing="false" onAction="#play" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #c95d6a;" text="Παίξε">
          <font>
             <Font name="Comic Sans MS Bold" size="30.0" />
          </font></Button>
-      <Button layoutX="400.0" layoutY="402.0" mnemonicParsing="false" onAction="#Instructions" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #c95d6a;" text="Οδηγίες">
+      <Button layoutX="400.0" layoutY="402.0" mnemonicParsing="false" onAction="#instructions" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #c95d6a;" text="Οδηγίες">
          <font>
             <Font name="Comic Sans MS Bold" size="30.0" />
          </font></Button>
-      <Button layoutX="400.0" layoutY="510.0" mnemonicParsing="false" onAction="#Exit" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #c95d6a;" text="Έξοδος">
+      <Button layoutX="400.0" layoutY="510.0" mnemonicParsing="false" onAction="#exit" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #c95d6a;" text="Έξοδος">
          <font>
             <Font name="Comic Sans MS Bold" size="30.0" />
          </font></Button>

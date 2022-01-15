@@ -9,12 +9,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="985.0" style="-fx-background-color: #e1eef9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gr.aueb.dmst.jabuzzz.game.view.InstructionsController">
    <children>
-      <Button fx:id="play" layoutX="820.0" layoutY="574.0" mnemonicParsing="false" onAction="#Play" prefHeight="60.0" prefWidth="138.0" style="-fx-background-color: #c95d6a;" text="Παίξε" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="820.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="574.0">
+      <Button fx:id="play" layoutX="820.0" layoutY="574.0" mnemonicParsing="false" onAction="#play" prefHeight="60.0" prefWidth="138.0" style="-fx-background-color: #c95d6a;" text="Παίξε" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="820.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="574.0">
          <font>
             <Font name="Comic Sans MS Bold" size="30.0" />
          </font>
       </Button>
-      <Button fx:id="back" layoutX="24.0" layoutY="28.0" mnemonicParsing="false" onAction="#GoBack" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #c95d6a;" text=" Πίσω" AnchorPane.bottomAnchor="608.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="864.0" AnchorPane.topAnchor="28.0">
+      <Button fx:id="back" layoutX="24.0" layoutY="28.0" mnemonicParsing="false" onAction="#goBack" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #c95d6a;" text=" Πίσω" AnchorPane.bottomAnchor="608.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="864.0" AnchorPane.topAnchor="28.0">
          <font>
             <Font name="Comic Sans MS Bold" size="18.0" />
          </font>

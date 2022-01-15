@@ -2,7 +2,7 @@ package gr.aueb.dmst.jabuzzz.entities;
 
 /**
  * Representation of Team concept.
- * 
+ *
  * @version 1.0 17/11/2021
  */
 public class Team {
@@ -45,7 +45,7 @@ public class Team {
 
     /**
      * Represents a Team object by returning its name.
-     * 
+     *
      * @return name that defines a team
      */
     @Override

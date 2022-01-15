@@ -13,46 +13,97 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import gr.aueb.dmst.jabuzzz.entities.Category;
-import gr.aueb.dmst.jabuzzz.entities.DifficultyOfGame;
-import gr.aueb.dmst.jabuzzz.entities.DifficultyOfGame.Difficulty;
+import gr.aueb.dmst.jabuzzz.entities.Difficulty;
 import gr.aueb.dmst.jabuzzz.game.Main;
 
 public class GameSetUpController implements Initializable {
 
-    static String diffLevel;
-    static String nameA;
-    static String nameB;
-    static int goal;
+    /**
+     * The String representation of the difficulty.
+     */
+    private static String diffLevel;
+    /**
+     * The total points both teams choose to winning limit.
+     */
+    private static int goal;
+    /**
+     * Enum that holds information of the difficulty.
+     */
     private static Difficulty level = null;
+    /**
+     * Name of team A.
+     */
+    private static String nameA;
+    /**
+     * Name of team B.
+     */
+    private static String nameB;
+    /**
+     * A Category object for geography.
+     */
     private static Category geo;
+    /**
+     * A Category object for history.
+     */
     private static Category hist;
+    /**
+     * A Category object for mythology.
+     */
     private static Category myth;
 
+    /**
+     * A text field for team A to enter their custom name.
+     */
     @FXML
     private TextField teamAField;
 
+    /**
+     * A text field for team B to enter their custom name.
+     */
     @FXML
     private TextField teamBField;
 
+    /**
+     * Check box where the teams decide if they want to play
+     * mythology questions.
+     */
     @FXML
     private CheckBox mythology;
 
+    /**
+     * Check box where the teams decide if they want to play
+     * geography questions.
+     */
     @FXML
     private CheckBox geography;
 
+    /**
+     * Check box where the teams decide if they want to play
+     * history questions.
+     */
     @FXML
     private CheckBox history;
 
+    /**
+     * Slider where players choose in how many points the game finishes.
+     */
     @FXML
     private Slider pointsToFinish;
 
+    /**
+     * Players can choose the difficulty of the game.
+     */
     @FXML
     private ChoiceBox<String> difficulty;
 
-    // TODO: Handle the event where no category is selected, until there is at least one selected
+    /**
+     * Checks parameters of the game settings and
+     * changes to the main game's view.
+     * @throws IOException
+     */
     @FXML
     public void start() throws IOException {
-    	nameA = teamAField.getText();
+        nameA = teamAField.getText();
         nameB = teamBField.getText();
         goal = (int) pointsToFinish.getValue();
         myth.setSelected(mythology.isSelected());
@@ -60,17 +111,17 @@ public class GameSetUpController implements Initializable {
         hist.setSelected(history.isSelected());
         diffLevel = difficulty.getValue();
         setDifficultyOfGame();
-        
-        if (myth.getSelected() == false && geo.getSelected() == false && hist.getSelected() == false) {
-        	Alert alert = new Alert(Alert.AlertType.WARNING);
-        	alert.setTitle("Warning");
-        	alert.setContentText("Επιλέξτε κατηγορία και... Καλή Διασκέδαση!");
-        	alert.show();
+
+        if (myth.getSelected() && geo.getSelected() && hist.getSelected()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setContentText(
+                    "Επιλέξτε κατηγορία και... Καλή Διασκέδαση!");
+            alert.show();
         } else {
-            LetsGo();
+            letsGo();
         }
 
-        
     }
 
     @FXML
@@ -78,12 +129,29 @@ public class GameSetUpController implements Initializable {
         new Main().showMainMenu();
     }
 
-    private void LetsGo() throws IOException {
+    private void letsGo() throws IOException {
         new Main().showMainView();
     }
 
+    /**
+     * @return name of Team A
+     */
+    public static String getNameA() {
+        return nameA;
+    }
+
+    /**
+     * @return name of Team B
+     */
+    public static String getNameB() {
+        return nameB;
+    }
+
+    /**
+     * Initialises objects used on this display.
+     */
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
+    public void initialize(final URL arg0, final ResourceBundle arg1) {
         difficulty.getItems().addAll("Εύκολο", "Κανονικό", "Δύσκολο");
         difficulty.setValue("Κανονικό");
         teamAField.setText("Ομάδα Α");
@@ -93,26 +161,32 @@ public class GameSetUpController implements Initializable {
         myth = new Category("Mythology");
     }
 
-    // method that creates the difficulty object
+    /**
+     * method that creates the difficulty object.
+     */
     public void setDifficultyOfGame() {
         if (diffLevel.equals("Εύκολο")) {
-            level = DifficultyOfGame.Difficulty.EASY;
+            level = Difficulty.EASY;
         } else if (diffLevel.equals("Κανονικό")) {
-            level = DifficultyOfGame.Difficulty.NORMAL;
+            level = Difficulty.NORMAL;
         } else {
-            level = DifficultyOfGame.Difficulty.HARD;
+            level = Difficulty.HARD;
         }
 
     }
 
+    /**
+     * @return the points to be reached for a team to win.
+     */
     public static int getFinishPoints() {
         return goal;
     }
-    
+
     /**
      * Examines all of the categories if they are selected, in which case
      * they are added in an array list and are returned to the user.
-     * @return an ArrayList of String that contains the names of selected categories.
+     * @return an ArrayList of String that contains the names of selected
+     * categories.
      */
     public static ArrayList<String> categoryNames() {
         ArrayList<String> catNames = new ArrayList<String>();
@@ -125,18 +199,25 @@ public class GameSetUpController implements Initializable {
         if (myth.getSelected()) {
             catNames.add(myth.getCategoryName());
         }
-        
+
         return catNames;
     }
 
+    /**
+     * Depending on the difficulty of game changes the number of answers.
+     * @return the number of answers to be displayed
+     */
     public static int getNumberOfAnswers() {
+        final int answersForEasy = 3;
+        final int answersForNormal = 4;
+        final int answersForHard = 5;
         switch (level) {
         case EASY:
-            return 3;
+            return answersForEasy;
         case NORMAL:
-            return 4;
+            return answersForNormal;
         default:
-            return 5;
+            return answersForHard;
         }
     }
 }

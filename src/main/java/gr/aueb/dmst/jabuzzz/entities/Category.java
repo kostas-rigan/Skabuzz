@@ -15,13 +15,14 @@ public class Category {
      */
     private boolean isSelected;
 
-    /*
+    /**
      * Class constructor initialising categoryName field.
+     * @param catName name of the category object
      */
-    public Category(String catName) {
+    public Category(final String catName) {
         this.categoryName = catName;
     }
-    
+
     /**
      * @return category identifier.
      */
@@ -32,15 +33,15 @@ public class Category {
     /**
      * Sets the value for isSelected to true if players select this category
      * and false if it is not selected.
-     * @param selected true or false, depending on whether it is selected or not.
+     * @param selected true or false, depending on whether it is selected or not
      */
-    public void setSelected(boolean selected) {
+    public void setSelected(final boolean selected) {
         this.isSelected = selected;
     }
-    
+
     /**
-     * Returns the value of isSelected field, which informs about the selection state
-     * of this category.
+     * Returns the value of isSelected field, which informs about the selection
+     * state of this category.
      * @return true if selected or false if not selected
      */
     public boolean getSelected() {

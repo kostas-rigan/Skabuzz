@@ -2,9 +2,6 @@ package gr.aueb.dmst.jabuzzz.game.view;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
@@ -36,78 +33,177 @@ import gr.aueb.dmst.jabuzzz.entities.Question;
 import gr.aueb.dmst.jabuzzz.entities.Score;
 import gr.aueb.dmst.jabuzzz.entities.Team;
 import gr.aueb.dmst.jabuzzz.game.Main;
-import gr.aueb.dmst.jabuzzz.utilities.Buzzer;
-import gr.aueb.dmst.jabuzzz.utilities.Timer;
+import java.util.Timer;
 
 public class MainViewController implements Initializable {
 
+    /**
+     * The starting second from which the timer is initiated.
+     */
     private static final int INITIAL_SECOND = 5;
+    /**
+     * Current question in the game.
+     */
     private int quest;
-    private Buzzer buzzer = new Buzzer();
+    /**
+     * Object used to make the connection to the database and fetch
+     * the questions.
+     */
     private DBConnector dbconnector = new DBConnector();
+    /**
+     * Represents the score team A has.
+     */
     private Score scoreA;
+    /**
+     * Represents the score team B has.
+     */
     private Score scoreB;
+    /**
+     * Represents the score the current playing team has.
+     */
     private Score playingTeamScore;
+    /**
+     * A Label object that stores the label of current playing team.
+     */
     private Label playingTeamScoreArea;
+    /**
+     * A String representation of currently playing team.
+     */
     private String playingTeam;
+    /**
+     * Used when checking if the playing team has reached the time limit.
+     */
     private Timer timer;
+    /**
+     * Stores the current second in timer functionality.
+     */
     private int currentSecond = INITIAL_SECOND;
-    private IntegerProperty timeSeconds = new SimpleIntegerProperty(INITIAL_SECOND);
+    /**
+     * Wrapper for the seconds remaining to answer.
+     */
+    private IntegerProperty timeSeconds =
+            new SimpleIntegerProperty(INITIAL_SECOND);
+    /**
+     * Used to implement the on-screen timer in-game.
+     */
     private Timeline timeline;
+    /**
+     * Player-defined points to win.
+     * If a team reaches these points, game is over.
+     */
     private int pointsToFinish;
+    /**
+     * Depending on difficulty chosen, there are different
+     * number of answers displayed.
+     */
     private int numberOfAnswers;
+    /**
+     * A String representation of the team that won.
+     */
     private static String winnerTeam;
 
+    /**
+     * It groups all the answer radio buttons together for quicker access.
+     */
     @FXML
-    private ToggleGroup Options;
+    private ToggleGroup options;
 
+    /**
+     * Button pressed to return to the main menu.
+     */
     @FXML
     private Button exitButton;
 
+    /**
+     * Shows up in the end of every round to access next question.
+     */
     @FXML
     private Button nextButton;
 
+    /**
+     * Enabled when a new question shows up, and is responsible for
+     * the playing team handling.
+     */
     @FXML
     private Button buzzerButton;
 
+    /**
+     * A Label where team A's name is displayed on screen.
+     */
     @FXML
     private Label teamAArea;
 
+    /**
+     * A Label where team B's name is displayed on screen.
+     */
     @FXML
     private Label teamBArea;
 
+    /**
+     * A Label where team A's score is displayed on screen.
+     */
     @FXML
     private Label scoreAArea;
 
+    /**
+     * A Label where team B's score is displayed on screen.
+     */
     @FXML
     private Label scoreBArea;
 
+    /**
+     * Label where the question's description is displayed on screen.
+     */
     @FXML
     private Label questionArea;
 
+    /**
+     * Radio button for the first answer in order.
+     */
     @FXML
     private RadioButton answerA;
 
+    /**
+     * Radio button for the second answer in order.
+     */
     @FXML
     private RadioButton answerB;
 
+    /**
+     * Radio button for the third answer in order.
+     */
     @FXML
     private RadioButton answerC;
 
+    /**
+     * Radio button for the fourth answer in order.
+     */
     @FXML
     private RadioButton answerD;
 
+    /**
+     * Radio button for the fifth answer in order.
+     */
     @FXML
     private RadioButton answerE;
 
+    /**
+     * Shows time left when buzzer is pressed.
+     */
     @FXML
     private Label timerLabel;
-    
+
+    /**
+     * Displays the team that pressed buzzer button faster.
+     */
     @FXML
     private Label plays;
 
+    /**
+     * Initializes needed objects for the main game.
+     */
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
+    public void initialize(final URL arg0, final ResourceBundle arg1) {
         quest = 0;
         changeTraversability();
         disableButtons();
@@ -117,8 +213,8 @@ public class MainViewController implements Initializable {
         loadQuestions();
         Question.shuffleQuestion();
         setNewQA();
-        Team teamA = new Team(GameSetUpController.nameA);
-        Team teamB = new Team(GameSetUpController.nameB);
+        Team teamA = new Team(GameSetUpController.getNameA());
+        Team teamB = new Team(GameSetUpController.getNameB());
 
         scoreA = new Score();
         scoreB = new Score();
@@ -129,35 +225,38 @@ public class MainViewController implements Initializable {
         scoreAArea.setText(scoreA.toString());
         scoreBArea.setText(scoreB.toString());
 
-        // timerLabel.setText(Integer.toString(INITIAL_SECOND));
         timerLabel.textProperty().bind(timeSeconds.asString());
-        timer = new Timer(timerLabel);
+        timer = new Timer();
 
         pointsToFinish = GameSetUpController.getFinishPoints();
     }
 
-    private void editToggleGroup(int numbOfAnswers) {
-        if (numbOfAnswers == 3) {
+    private void editToggleGroup(final int numbOfAnswers) {
+        final int answersForEasy = 3;
+        final int answersForNormal = 4;
+        if (numbOfAnswers == answersForEasy) {
             answerD.setToggleGroup(null);
             answerD.setOpacity(0);
             answerE.setToggleGroup(null);
             answerE.setOpacity(0);
-        } else if (numbOfAnswers == 4) {
+        } else if (numbOfAnswers == answersForNormal) {
             answerE.setToggleGroup(null);
             answerE.setOpacity(0);
         }
-        
+
     }
 
     /**
-     * handleBuzzer method initiates when a team presses their respective key. It
+     * handleBuzzer method initiates when a team presses their key. It
      * controls the flow of the game regarding to the question answered.
-     * 
+     *
      * @param keyEvent the first key pressed by either team.
      */
     @FXML
-    public void handleBuzzer(KeyEvent keyEvent) throws InterruptedException {
-        if (keyEvent.getCode() == KeyCode.A || keyEvent.getCode() == KeyCode.L) {
+    public void handleBuzzer(final KeyEvent keyEvent)
+            throws InterruptedException {
+        if (keyEvent.getCode() == KeyCode.A
+                || keyEvent.getCode() == KeyCode.L) {
             exitButton.requestFocus();
             if (keyEvent.getCode() == KeyCode.A) {
                 playingTeamScore = scoreA;
@@ -171,11 +270,8 @@ public class MainViewController implements Initializable {
 
             plays.setText("Παίξε " + playingTeam);
             plays.setOpacity(1);
-            Label[] labels = { teamAArea, teamBArea };
-            buzzer.buzz(keyEvent.getCode(), labels);
-            // important to reinitialize timer object for controlTimeUp
-            // TODO(Kostas): check if it can be done without a timer object
-            timer = new Timer(timerLabel);
+            Label[] labels = {teamAArea, teamBArea};
+            timer = new Timer();
             initiateTimer();
             enableButtons();
             controlTimeUp();
@@ -184,12 +280,12 @@ public class MainViewController implements Initializable {
 
     /**
      * Initiates actions when the playing team answers the question.
-     * 
+     *
      * Stops the timer and disables the answer buttons, checks if
      * response is correct or wrong and evaluates if the team won
      * (reached maximum points) or lost(reached -5), giving the win
      * to the other team.
-     * 
+     *
      * @throws InterruptedException
      */
     @FXML
@@ -204,22 +300,22 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    private void Exit() {
-        System.exit(0);
+    private void returnToMainMenu() throws IOException {
+        new Main().showMainMenu();
     }
 
     /**
      * Changes to the next question after a round is finished.
-     * 
+     *
      * @param event the button pressed to advance to the next round
      */
     @FXML
-    void setNextQuestion(ActionEvent event) {
+    void setNextQuestion(final ActionEvent event) {
         timeSeconds.set(INITIAL_SECOND);
         quest++;
         if (quest == Question.getNumberOfQuestions()) {
-        	quest = 0;
-        	Question.shuffleQuestion();
+            quest = 0;
+            Question.shuffleQuestion();
         }
         setNewQA();
         nextButton.setOpacity(0);
@@ -228,13 +324,17 @@ public class MainViewController implements Initializable {
         unselectButton();
         resetRadioButtonBGColour();
     }
-    
+
+    /**
+     * @return a String representation of the winner team.
+     */
     public static String getWinnerTeam() {
         return winnerTeam;
     }
 
     /*
-     * Initiates count down when either team has pressed their respective key to answer the question.
+     * Initiates count down when either team has pressed their
+     *  respective key to answer the question.
      */
     private void initiateTimer() {
         if (timeline != null) {
@@ -242,17 +342,19 @@ public class MainViewController implements Initializable {
         }
         timeSeconds.set(INITIAL_SECOND);
         timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(INITIAL_SECOND + 1), new KeyValue(timeSeconds, 0)));
+        timeline.getKeyFrames().add(new KeyFrame(Duration
+                .seconds(INITIAL_SECOND + 1), new KeyValue(timeSeconds, 0)));
         timeline.playFromStart();
     }
 
     /*
-     * changeTraversability disables focus that was initially on the wrong buttons,
-     * and initilises it to the buzzerButton object.
+     * changeTraversability disables focus that was initially on the
+     * wrong buttons, and initilises it to the buzzerButton object.
      */
     private void changeTraversability() {
         exitButton.setFocusTraversable(false);
-        for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
+        for (Iterator<Toggle> iterator = options.getToggles().iterator();
+                iterator.hasNext();) {
             RadioButton radioButton = (RadioButton) iterator.next();
             radioButton.setFocusTraversable(false);
         }
@@ -274,8 +376,9 @@ public class MainViewController implements Initializable {
      * Depending on the boolean value, it disables(true) or enables(false)
      * the radio buttons on screen.
      */
-    private void changeButtonStatus(boolean a) {
-        for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
+    private void changeButtonStatus(final boolean a) {
+        for (Iterator<Toggle> iterator = options.getToggles().iterator();
+                iterator.hasNext();) {
             RadioButton radioButton = (RadioButton) iterator.next();
             radioButton.setDisable(a);
         }
@@ -283,8 +386,8 @@ public class MainViewController implements Initializable {
 
     /*
      * Controls actions used when timer's count down is over.
-     * Makes the proper changes to the interface when the playing team hasn't answered
-     * and checks if there is a game over condition.
+     * Makes the proper changes to the interface when the playing team
+     * hasn't answered and checks if there is a game over condition.
      */
     private void timeIsUp() {
         disableButtons();
@@ -292,7 +395,7 @@ public class MainViewController implements Initializable {
         currentSecond = INITIAL_SECOND;
         playingTeamScore.wrongAnswer();
         Platform.runLater(new Runnable() {
-            
+
             @Override
             public void run() {
                 playingTeamScoreArea.setText(playingTeamScore.toString());
@@ -308,7 +411,7 @@ public class MainViewController implements Initializable {
      * it was correct or wrong and alters their score accordingly.
      */
     private void checkAnswer() {
-        RadioButton button = (RadioButton) Options.getSelectedToggle();
+        RadioButton button = (RadioButton) options.getSelectedToggle();
         String correctAnswer = Question.getCorrectAnswer(quest);
         if (button.getText().equals(correctAnswer)) {
             playingTeamScore.correctAnswer();
@@ -320,11 +423,13 @@ public class MainViewController implements Initializable {
     }
 
     /*
-     * At the beginning of each turn loads a question from the list and displays it on screen.
+     * At the beginning of each turn loads a question
+     * from the list and displays it on screen.
      */
     private void setNewQA() {
         int answer = 0;
-        for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
+        for (Iterator<Toggle> iterator = options.getToggles().iterator();
+                iterator.hasNext();) {
             RadioButton radioButton = (RadioButton) iterator.next();
             radioButton.setText(Question.getAnswer(quest, answer));
             answer++;
@@ -333,10 +438,11 @@ public class MainViewController implements Initializable {
     }
 
     /*
-     * Cancels current timeline object count down if the playing team has answered their question.
+     * Cancels current timeline object count down
+     * if the playing team has answered their question.
      */
     private void stopTimer() {
-        if (Options.getSelectedToggle() != null) {
+        if (options.getSelectedToggle() != null) {
             timeline.stop();
         }
         currentSecond = INITIAL_SECOND;
@@ -348,7 +454,8 @@ public class MainViewController implements Initializable {
      * #b3f17b -> in hexadecimal system it is a greenish colour.
      */
     private void showCorrectAnswer() {
-        for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
+        for (Iterator<Toggle> iterator = options.getToggles().iterator();
+                iterator.hasNext();) {
             RadioButton button = (RadioButton) iterator.next();
             if (button.getText().equals(Question.getCorrectAnswer(quest))) {
                 changeBackgroundColor("#b3f17b", button);
@@ -357,17 +464,22 @@ public class MainViewController implements Initializable {
     }
 
     /*
-     * Given a colour and a radio button, it highlights the background colour of the button,
+     * Given a colour and a radio button,
+     * it highlights the background colour of the button,
      * sharpening a bit the corners giving a more round look.
      */
-    private void changeBackgroundColor(String color, RadioButton button) {
+    private void changeBackgroundColor(final String color,
+            final RadioButton button) {
+        final double cornerRadius = 0.1;
         Background background = new Background(
-                new BackgroundFill(Paint.valueOf(color), new CornerRadii(0.1, true), null));
+                new BackgroundFill(Paint.valueOf(color),
+                        new CornerRadii(cornerRadius, true), null));
         button.setBackground(background);
     }
 
     /*
-     * Loads questions from database, depending on categories given in game setup.
+     * Loads questions from database,
+     * depending on categories given in game setup.
      */
     private void loadQuestions() {
         ArrayList<String> categoryNames = GameSetUpController.categoryNames();
@@ -375,27 +487,29 @@ public class MainViewController implements Initializable {
         for (String category : categoryNames) {
             questIds.addAll(dbconnector.selectQuestionId(category));
         }
-        
-        for (int i = 0; i < questIds.size(); i++) { 
+
+        for (int i = 0; i < questIds.size(); i++) {
             /*
-             * Check if correct answer is in the first numberOfAnswers array cells.
+             * Check if correct answer is in first numberOfAnswers array cells.
              * If it is then it will continue.
              * Otherwise it will remove the question and re add it.
              */
              while (true) {
-        	    
-        	    new Question(dbconnector.selectQuestion(questIds.get(i)));
-        	    String currentCorrectAnswer = Question.correctAnswer.get(i);
-        	    ArrayList<String> currentQuestionAnswers = Question.answer.get(i);
-        	    
-        	    int index = currentQuestionAnswers.indexOf(currentCorrectAnswer);
-        	    
-        	    if (index < numberOfAnswers) {
-        	        break;
-        	    }
-        	    
-        	    Question.popQuestion();
-        	}
+
+                new Question(dbconnector.selectQuestion(questIds.get(i)));
+                String currentCorrectAnswer = Question.getCorrectAnswer(i);
+                ArrayList<String> currentQuestionAnswers =
+                        Question.getAnswers(i);
+
+                int index = currentQuestionAnswers
+                        .indexOf(currentCorrectAnswer);
+
+                if (index < numberOfAnswers) {
+                    break;
+                }
+
+                Question.popQuestion();
+             }
         }
     }
 
@@ -404,6 +518,8 @@ public class MainViewController implements Initializable {
      * being answered.
      */
     private void controlTimeUp() {
+        final long delay = 500;
+        final long period = 1000;
         timer.scheduleAtFixedRate(new TimerTask() {
 
             @Override
@@ -417,29 +533,32 @@ public class MainViewController implements Initializable {
                     timer.cancel();
                 }
             }
-        }, 500, 1000); 
+        }, delay, period);
     }
 
     /**
-     * After an answer is given, it clears the selection of every button
-     * TODO: find a way to not loop through every button
+     * After an answer is given, it clears the selection of every button.
      */
     private void unselectButton() {
-        for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
+        for (Iterator<Toggle> iterator = options.getToggles().iterator();
+                iterator.hasNext();) {
             RadioButton button = (RadioButton) iterator.next();
             button.setSelected(false);
         }
     }
 
     /*
-     * After each turn has passed, it clears the background colour of every radio button.
-     * Loop is used because when a wrong answer is given, there are two radio buttons with
-     * a background colour.
+     * After each turn has passed,
+     * it clears the background colour of every radio button.
+     * Loop is used because when a wrong answer is given,
+     * there are two radio buttons with a background colour.
      */
     private void resetRadioButtonBGColour() {
-        for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
+        for (Iterator<Toggle> iterator = options.getToggles().iterator();
+                iterator.hasNext();) {
             RadioButton button = (RadioButton) iterator.next();
-            Background background = new Background(new BackgroundFill(null, null, null));
+            Background background =
+                    new Background(new BackgroundFill(null, null, null));
             button.setBackground(background);
         }
     }
@@ -449,10 +568,11 @@ public class MainViewController implements Initializable {
      * and determine the winner team.
      */
     private void checkGameOver() {
+        final int losingPoints = -5;
         if (playingTeamScore.getTeamsScore() == pointsToFinish) {
             hideAndDisableInWinner();
             inititateEndOfGame(playingTeam);
-        } else if (playingTeamScore.getTeamsScore() == -5){
+        } else if (playingTeamScore.getTeamsScore() == losingPoints) {
             hideAndDisableInWinner();
             if (playingTeam.equals(teamAArea.getText())) {
                 inititateEndOfGame(teamBArea.getText());
@@ -465,7 +585,7 @@ public class MainViewController implements Initializable {
     /*
      * Show the winning team, which is given by a String representation.
      */
-    private void inititateEndOfGame(String winTeam) {
+    private void inititateEndOfGame(final String winTeam) {
         winnerTeam = winTeam;
         Question.cleanQuestions();
         try {
@@ -479,7 +599,8 @@ public class MainViewController implements Initializable {
      * Hide every unnecessary object when a winning team has been determined.
      */
     private void hideAndDisableInWinner() {
-        for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
+        for (Iterator<Toggle> iterator = options.getToggles().iterator();
+                iterator.hasNext();) {
             RadioButton button = (RadioButton) iterator.next();
             button.setOpacity(0);
         }
@@ -490,27 +611,5 @@ public class MainViewController implements Initializable {
         timerLabel.setOpacity(0);
         nextButton.setDisable(true);
         nextButton.setOpacity(0);
-    }
-    
-    private ArrayList<Integer> selectQuestionId(String category){
-        ArrayList<Integer> ids = new ArrayList<Integer>();
-
-        String sql = String.format("SELECT Question_id FROM Questions WHERE Category = '%s'",category);
-        questionArea.setText(dbconnector.getConnection().toString());
-
-        /*try {
-            Statement stmt = dbconnector.getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-
-            // loop through the result set
-            /*while (rs.next()) {
-                ids.add((Integer) rs.getObject(1));
-            }*/
-
-        /*} catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return null;
-        } */
-        return ids;
     }
 }

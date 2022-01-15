@@ -31,10 +31,10 @@
                   <Insets bottom="20.0" left="20.0" />
                </VBox.margin>
                <toggleGroup>
-                  <ToggleGroup fx:id="Options" />
+                  <ToggleGroup fx:id="options" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="answerB" layoutX="10.0" layoutY="222.0" mnemonicParsing="false" onAction="#onAnswerGiven" text="Nikos" toggleGroup="$Options">
+            <RadioButton fx:id="answerB" layoutX="10.0" layoutY="222.0" mnemonicParsing="false" onAction="#onAnswerGiven" text="Nikos" toggleGroup="$options">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
@@ -42,7 +42,7 @@
                   <Insets bottom="20.0" left="20.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton fx:id="answerC" layoutX="10.0" layoutY="250.0" mnemonicParsing="false" onAction="#onAnswerGiven" text="Maria" toggleGroup="$Options">
+            <RadioButton fx:id="answerC" layoutX="10.0" layoutY="250.0" mnemonicParsing="false" onAction="#onAnswerGiven" text="Maria" toggleGroup="$options">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
@@ -50,7 +50,7 @@
                   <Insets bottom="20.0" left="20.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton fx:id="answerD" layoutX="10.0" layoutY="278.0" mnemonicParsing="false" onAction="#onAnswerGiven" text="Kostantis" toggleGroup="$Options">
+            <RadioButton fx:id="answerD" layoutX="10.0" layoutY="278.0" mnemonicParsing="false" onAction="#onAnswerGiven" text="Kostantis" toggleGroup="$options">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
@@ -58,7 +58,7 @@
                   <Insets bottom="20.0" left="20.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton fx:id="answerE" layoutX="10.0" layoutY="306.0" mnemonicParsing="false" onAction="#onAnswerGiven" text="Margianna" toggleGroup="$Options">
+            <RadioButton fx:id="answerE" layoutX="10.0" layoutY="306.0" mnemonicParsing="false" onAction="#onAnswerGiven" text="Margianna" toggleGroup="$options">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
@@ -75,7 +75,7 @@
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#Exit" style="-fx-background-color: #c95d6a;" text="Έξοδος">
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#returnToMainMenu" style="-fx-background-color: #c95d6a;" text="Πίσω στο Μενού">
                <HBox.margin>
                   <Insets left="24.0" top="28.0" />
                </HBox.margin>
@@ -83,7 +83,7 @@
                   <Font name="Comic Sans MS Bold" size="18.0" />
                </font>
             </Button>
-            <Region prefHeight="100.0" prefWidth="285.0" />
+            <Region prefHeight="100.0" prefWidth="200.0" />
             <VBox prefHeight="100.0" prefWidth="198.0">
                <children>
                   <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="49.0" prefWidth="201.0" text="Label" textFill="#c31919">

@@ -10,29 +10,47 @@ import javafx.scene.control.Label;
 import gr.aueb.dmst.jabuzzz.game.Main;
 
 public class EndOfGameController implements Initializable {
-	   
-		@FXML
-	    private Label winnerName;
 
-	    @FXML
-	    private Button playAgain;
+    /**
+     * The Label objetc that will display which team won.
+     */
+    @FXML
+    private Label winnerName;
 
-	    @FXML
-	    private Button Exit;
+    /**
+     * Button used when teams want to play again.
+     */
+    @FXML
+    private Button playAgain;
 
-	    @FXML
-	    void ExitGame() {
-	    	System.exit(0);
-	    }
+    /**
+     * Will exit from the game completely.
+     */
+    @FXML
+    private Button exit;
 
-	    @FXML
-	    void GoToGameSetUp() throws IOException {
-	        new Main().showGameSetUp();
-	    }
+    /**
+     * Exits the game.
+     */
+    @FXML
+    public void exitGame() {
+        System.exit(0);
+    }
 
-		@Override
-		public void initialize(URL arg0, ResourceBundle arg1) {
-		    winnerName.setText(MainViewController.getWinnerTeam());
-		}
+    /**
+     * Returns to the game set up menu.
+     * @throws IOException
+     */
+    @FXML
+    public void goToGameSetUp() throws IOException {
+        new Main().showGameSetUp();
+    }
+
+    /**
+     * Initializes the name of the team that won.
+     */
+    @Override
+    public void initialize(final URL arg0, final ResourceBundle arg1) {
+        winnerName.setText(MainViewController.getWinnerTeam());
+    }
 }
-

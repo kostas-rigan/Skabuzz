@@ -104,7 +104,7 @@
    <right>
       <VBox prefHeight="473.0" prefWidth="196.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" prefHeight="25.0" prefWidth="148.0" text="Buzzer 'Λ'" textAlignment="CENTER">
+            <Label alignment="CENTER" prefHeight="25.0" prefWidth="148.0" text="Buzzer 'Λ'" textAlignment="CENTER" textFill="#c31919">
                <font>
                   <Font name="Comic Sans MS" size="18.0" />
                </font>
@@ -135,7 +135,7 @@
    <left>
       <VBox prefHeight="473.0" prefWidth="195.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="146.0" text="Buzzer 'Α'" textAlignment="CENTER">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="146.0" text="Buzzer 'Α'" textAlignment="CENTER" textFill="#c31919">
                <font>
                   <Font name="Comic Sans MS" size="18.0" />
                </font>

@@ -270,7 +270,6 @@ public class MainViewController implements Initializable {
 
             plays.setText("Παίξε " + playingTeam);
             plays.setOpacity(1);
-            Label[] labels = {teamAArea, teamBArea};
             timer = new Timer();
             initiateTimer();
             enableButtons();

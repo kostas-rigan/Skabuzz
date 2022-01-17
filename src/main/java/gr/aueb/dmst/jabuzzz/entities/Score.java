@@ -7,45 +7,46 @@ package gr.aueb.dmst.jabuzzz.entities;
  * @version 1.0 25/11/2021
  */
 public class Score {
-    /**
+  /**
      * teamsScore stores the current teams score.
      */
-    private int teamsScore;
-    /**
+  private int teamsScore;
+  /**
      * Class constructor specifying teams target.
      */
-    public Score() {
-        teamsScore = 0;
-    }
+  
+  public Score() {
+    teamsScore = 0;
+  }
 
-    /**
+  /*
      * correctAnswer is called when a team has given a correct answer and
      * increases the teams score by one.
      */
-    public void correctAnswer() {
-        teamsScore += 1;
-    }
+  public void correctAnswer() {
+    teamsScore += 1;
+  }
 
-    /**
+  /*
      * wrongAnswer is called when a team has given a wrong answer and decreases
      * teams' score by one.
      */
-    public void wrongAnswer() {
-        teamsScore -= 1;
-    }
+  public void wrongAnswer() {
+    teamsScore -= 1;
+  }
 
-    /**
+  /*
      * @return teamScore value.
      */
-    public int getTeamsScore() {
-        return teamsScore;
-    }
+  public int getTeamsScore() {
+    return teamsScore;
+  }
 
-    /**
+  /*
      * Returns a String representation of the Score.
      */
-    @Override
-    public String toString() {
-        return "Score:" + teamsScore;
-    }
+  @Override
+  public String toString() {
+    return "Score:" + teamsScore;
+  }
 }
